@@ -1,6 +1,6 @@
 import Node from './node.js'
 
-class LinkedList {
+export default class LinkedList {
   constructor() {
     this.head = null;
   }
@@ -146,20 +146,3 @@ class LinkedList {
     return currentNode.value;
   }
 }
-
-const newList = new LinkedList;
-newList.append('Zoka');
-newList.prepend('Luka');
-newList.prepend('Devin');
-newList.prepend('Kevin');
-
-console.log(newList.size());
-console.log(newList.contains('Zoka'));
-console.log(newList.find('Zoka'));
-console.log(newList.toString());
-
-newList.insertAt('Michael', 0);
-console.log(newList.toString());
-
-console.log(newList.removeAt(0));
-console.log(newList.toString());
