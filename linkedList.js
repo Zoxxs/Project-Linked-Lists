@@ -16,7 +16,6 @@ class LinkedList {
       currentNode = currentNode.nextNode;
     }
     currentNode.nextNode = newNode;
-
   }
 
   prepend(value) {
@@ -26,8 +25,9 @@ class LinkedList {
   }
 
   size() {
+    if (!this.head) return 0;
     let currentNode = this.head;
-    let length = 0;
+    let length = 1;
     while (currentNode.nextNode !== null) {
       length++;
       currentNode = currentNode.nextNode;
@@ -96,6 +96,55 @@ class LinkedList {
     }
     return null;
   }
+
+  toString() {
+    if (!this.head) return '';
+    let currentNode = this.head.nextNode;
+    let outputString = `${this.head.value}`
+    while (currentNode !== null) {
+      outputString += ` -> ${currentNode.value}`;
+      currentNode = currentNode.nextNode;
+    }
+    return outputString + ` -> null`;
+  }
+
+  insertAt(value, index) {
+    if (index < 0 || index > this.size()) throw Error('Index must be between 0 and the length of the list.');
+    if (index === 0) {
+      this.prepend(value);
+      return;
+    }
+    let currentNode = this.head;
+    let previousNode;
+    let currentIndex = 0;
+    while (currentIndex < index) {
+      previousNode = currentNode;
+      currentNode = currentNode.nextNode;
+      currentIndex++;
+    }
+    const newNode = new Node(value);
+    previousNode.nextNode = newNode;
+    newNode.nextNode = currentNode;
+  }
+
+  removeAt(index) {
+    if (index < 0 || index >= this.size()) throw Error(`Index must be between 0 and ${this.size() - 1}.`)
+    if (index === 0) {
+      const removedValue = this.head.value;
+      this.head = this.head.nextNode;
+      return removedValue;
+    }
+    let currentNode = this.head;
+    let previousNode;
+    let currentIndex = 0;
+    while (currentIndex < index) {
+      previousNode = currentNode;
+      currentNode = currentNode.nextNode;
+      currentIndex++;
+    }
+    previousNode.nextNode = currentNode.nextNode;
+    return currentNode.value;
+  }
 }
 
 const newList = new LinkedList;
@@ -107,3 +156,10 @@ newList.prepend('Kevin');
 console.log(newList.size());
 console.log(newList.contains('Zoka'));
 console.log(newList.find('Zoka'));
+console.log(newList.toString());
+
+newList.insertAt('Michael', 0);
+console.log(newList.toString());
+
+console.log(newList.removeAt(0));
+console.log(newList.toString());
